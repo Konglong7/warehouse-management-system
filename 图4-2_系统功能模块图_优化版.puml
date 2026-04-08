@@ -1,0 +1,119 @@
+@startuml
+' --- 通用配置 ---
+skinparam shadowing false
+skinparam backgroundColor white
+skinparam defaultFontName "Microsoft YaHei"
+skinparam roundcorner 10
+
+' --- 组件图配置 ---
+skinparam component {
+    BackgroundColor white
+    BorderColor black
+    BorderThickness 2
+    FontSize 18
+}
+
+skinparam package {
+    BackgroundColor white
+    BorderColor black
+    BorderThickness 2.5
+    FontSize 20
+}
+
+' --- 线条与箭头 ---
+skinparam arrow {
+    Color black
+    Thickness 2
+}
+
+title 图4-2 系统功能模块图\n
+
+' --- 顶层：用户管理 ---
+package "用户管理模块" as UserMgmt {
+    [用户登录] as Login
+    [用户信息管理] as UserInfo
+    [密码修改] as PwdChange
+    [权限控制] as AuthControl
+}
+
+' --- 第二层：基础数据管理 ---
+package "物料管理模块" as MaterialMgmt {
+    [物料信息维护] as MaterialInfo
+    [物料查询] as MaterialQuery
+    [库存预警] as StockAlert
+}
+
+package "供应商管理模块" as SupplierMgmt {
+    [供应商信息维护] as SupplierInfo
+    [供应商查询] as SupplierQuery
+}
+
+package "仓位管理模块" as LocationMgmt {
+    [仓位信息维护] as LocationInfo
+    [仓位状态管理] as LocationStatus
+}
+
+' --- 第三层：业务操作 ---
+package "入库管理模块" as InboundMgmt {
+    [入库单录入] as InboundEntry
+    [入库记录查询] as InboundQuery
+    [库存自动增加] as StockIncrease
+}
+
+package "出库管理模块" as OutboundMgmt {
+    [出库单录入] as OutboundEntry
+    [出库记录查询] as OutboundQuery
+    [库存校验] as StockCheck
+    [库存自动扣减] as StockDecrease
+}
+
+' --- 第四层：查询统计 ---
+package "库存查询模块" as StockQueryMgmt {
+    [库存状态查询] as StockStatusQuery
+    [库存预警提示] as StockAlertTip
+}
+
+package "数据统计模块" as StatsMgmt {
+    [关键指标统计] as KeyStats
+    [图表可视化] as ChartViz
+    [数据分析] as DataAnalysis
+}
+
+' --- 底层：系统支撑 ---
+package "系统支撑模块" as SupportMgmt {
+    [数据库管理] as DBMgmt
+    [日志管理] as LogMgmt
+    [操作记录] as OperLog
+}
+
+' --- 关键关系 ---
+Login ..> AuthControl : 验证
+AuthControl ..> UserInfo : 授权
+
+InboundEntry ..> MaterialQuery : 查询物料
+InboundEntry ..> LocationStatus : 查询仓位
+InboundEntry ..> StockIncrease : 触发
+StockIncrease ..> DBMgmt : 更新库存
+
+OutboundEntry ..> MaterialQuery : 查询物料
+OutboundEntry ..> StockCheck : 校验库存
+StockCheck ..> StockDecrease : 通过后触发
+StockDecrease ..> DBMgmt : 更新库存
+
+StockStatusQuery ..> DBMgmt : 查询数据
+StockStatusQuery ..> StockAlertTip : 判断预警
+StockAlertTip ..> StockAlert : 关联预警
+
+KeyStats ..> DBMgmt : 统计数据
+ChartViz ..> KeyStats : 可视化展示
+
+MaterialInfo ..> DBMgmt : 存储
+SupplierInfo ..> DBMgmt : 存储
+LocationInfo ..> DBMgmt : 存储
+
+UserInfo ..> OperLog : 记录
+InboundEntry ..> OperLog : 记录
+OutboundEntry ..> OperLog : 记录
+OperLog ..> LogMgmt : 存储日志
+
+@enduml

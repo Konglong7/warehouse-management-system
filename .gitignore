@@ -1,0 +1,24 @@
+# 后端忽略
+warehouse-backend/target/
+warehouse-backend/.idea/
+warehouse-backend/*.iml
+warehouse-backend/.mvn/
+
+# 前端忽略
+warehouse-frontend/node_modules/
+warehouse-frontend/dist/
+
+# 系统文件
+.DS_Store
+Thumbs.db
+*.log
+*.tmp
+
+# IDE
+.idea/
+.vscode/
+*.iml
+
+# 环境配置
+.env
+.env.local

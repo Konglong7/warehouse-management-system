@@ -1,0 +1,100 @@
+@startuml
+' --- 通用配置 ---
+skinparam shadowing false
+skinparam backgroundColor white
+skinparam defaultFontName "Microsoft YaHei"
+skinparam roundcorner 10
+
+' --- 用例图专用配置 ---
+skinparam usecase {
+    BackgroundColor white
+    BorderColor black
+    BorderThickness 2.5
+    FontSize 20
+}
+skinparam actor {
+    BackgroundColor white
+    BorderColor black
+    BorderThickness 2.5
+    FontSize 22
+}
+
+' --- 线条与箭头 ---
+skinparam arrow {
+    Color black
+    Thickness 2.5
+}
+
+skinparam packageStyle rectangle
+skinparam package {
+    BorderThickness 2
+    FontSize 18
+}
+
+' --- 角色定义 ---
+actor "管理员" as Admin
+
+' --- 系统边界 ---
+rectangle "智能仓库管理系统" {
+
+    ' --- 第一行 ---
+    usecase "登录系统" as UC1
+    usecase "查看首页" as UC2
+    usecase "个人信息" as UC3
+
+    ' --- 第二行 ---
+    usecase "物料查询" as UC4
+    usecase "入库操作" as UC5
+    usecase "出库操作" as UC6
+
+    ' --- 第三行 ---
+    usecase "物料管理" as UC7
+    usecase "供应商管理" as UC8
+    usecase "仓位管理" as UC9
+
+    ' --- 第四行 ---
+    usecase "用户管理" as UC10
+    usecase "库存查询" as UC11
+    usecase "数据统计" as UC12
+}
+
+' --- 管理员关联 ---
+Admin --> UC1
+Admin --> UC2
+Admin --> UC3
+Admin --> UC4
+Admin --> UC5
+Admin --> UC6
+Admin --> UC7
+Admin --> UC8
+Admin --> UC9
+Admin --> UC10
+Admin --> UC11
+Admin --> UC12
+
+' --- 布局控制（3x4网格） ---
+UC1 -[hidden]right- UC2
+UC2 -[hidden]right- UC3
+
+UC4 -[hidden]right- UC5
+UC5 -[hidden]right- UC6
+
+UC7 -[hidden]right- UC8
+UC8 -[hidden]right- UC9
+
+UC10 -[hidden]right- UC11
+UC11 -[hidden]right- UC12
+
+UC1 -[hidden]down- UC4
+UC2 -[hidden]down- UC5
+UC3 -[hidden]down- UC6
+
+UC4 -[hidden]down- UC7
+UC5 -[hidden]down- UC8
+UC6 -[hidden]down- UC9
+
+UC7 -[hidden]down- UC10
+UC8 -[hidden]down- UC11
+UC9 -[hidden]down- UC12
+
+@enduml

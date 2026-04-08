@@ -1,0 +1,115 @@
+@startuml
+' --- 通用配置 ---
+skinparam shadowing false
+skinparam backgroundColor white
+skinparam defaultFontName "Microsoft YaHei"
+skinparam roundcorner 10
+
+' --- 用例图专用配置 ---
+skinparam usecase {
+    BackgroundColor white
+    BorderColor black
+    BorderThickness 1.5
+    FontSize 16
+}
+skinparam actor {
+    BackgroundColor white
+    BorderColor black
+    BorderThickness 1.5
+    FontSize 16
+}
+
+' --- 线条与箭头 ---
+skinparam arrow {
+    Color black
+    Thickness 1.5
+}
+
+left to right direction
+skinparam ranksep 150
+skinparam nodesep 40
+
+' --- 角色定义 ---
+actor "普通用户" as User
+actor "管理员" as Admin
+
+' --- 泛化关系：管理员继承普通用户 ---
+Admin -up-|> User
+
+' --- 系统边界 ---
+rectangle "智能仓库管理系统" {
+
+    ' --- 普通用户权限 ---
+    package "基础功能" {
+        usecase "登录系统" as UC1
+        usecase "查看首页统计" as UC2
+        usecase "查看物料列表" as UC3
+        usecase "搜索物料" as UC4
+        usecase "修改个人信息" as UC5
+        usecase "修改登录密码" as UC6
+    }
+
+    package "业务操作" {
+        usecase "入库操作" as UC7
+        usecase "出库操作" as UC8
+        usecase "查看入库记录" as UC9
+        usecase "查看出库记录" as UC10
+        usecase "查看库存信息" as UC11
+    }
+
+    ' --- 管理员专属权限 ---
+    package "物料管理" {
+        usecase "新增物料" as UC12
+        usecase "修改物料" as UC13
+        usecase "删除物料" as UC14
+    }
+
+    package "供应商管理" {
+        usecase "新增供应商" as UC15
+        usecase "修改供应商" as UC16
+        usecase "删除供应商" as UC17
+    }
+
+    package "仓位管理" {
+        usecase "新增仓位" as UC18
+        usecase "修改仓位" as UC19
+        usecase "删除仓位" as UC20
+    }
+
+    package "用户管理" {
+        usecase "新增用户" as UC21
+        usecase "修改用户" as UC22
+        usecase "删除用户" as UC23
+        usecase "查看操作记录" as UC24
+    }
+}
+
+' --- 普通用户关联 ---
+User --> UC1
+User --> UC2
+User --> UC3
+User --> UC4
+User --> UC5
+User --> UC6
+User --> UC7
+User --> UC8
+User --> UC9
+User --> UC10
+User --> UC11
+
+' --- 管理员专属关联 ---
+Admin --> UC12
+Admin --> UC13
+Admin --> UC14
+Admin --> UC15
+Admin --> UC16
+Admin --> UC17
+Admin --> UC18
+Admin --> UC19
+Admin --> UC20
+Admin --> UC21
+Admin --> UC22
+Admin --> UC23
+Admin --> UC24
+
+@enduml

@@ -1,0 +1,117 @@
+@startuml
+' --- 通用配置 ---
+skinparam shadowing false
+skinparam backgroundColor white
+skinparam defaultFontName "Microsoft YaHei"
+skinparam roundcorner 10
+
+' --- 组件图配置 ---
+skinparam component {
+    BackgroundColor white
+    BorderColor black
+    BorderThickness 2.5
+    FontSize 20
+}
+
+skinparam package {
+    BackgroundColor white
+    BorderColor black
+    BorderThickness 3
+    FontSize 22
+}
+
+' --- 线条与箭头 ---
+skinparam arrow {
+    Color black
+    Thickness 2
+}
+
+title 图4-2 系统功能模块图\n
+
+' --- 第一行：用户和基础管理 ---
+package "用户管理" as P1 {
+    [用户登录]
+    [权限控制]
+}
+
+package "物料管理" as P2 {
+    [物料维护]
+    [物料查询]
+}
+
+package "供应商管理" as P3 {
+    [供应商维护]
+}
+
+' --- 第二行：业务操作 ---
+package "入库管理" as P4 {
+    [入库录入]
+    [库存增加]
+}
+
+package "出库管理" as P5 {
+    [出库录入]
+    [库存校验]
+    [库存扣减]
+}
+
+package "仓位管理" as P6 {
+    [仓位维护]
+    [状态管理]
+}
+
+' --- 第三行：查询统计 ---
+package "库存查询" as P7 {
+    [库存状态]
+    [预警提示]
+}
+
+package "数据统计" as P8 {
+    [指标统计]
+    [图表展示]
+}
+
+package "系统支撑" as P9 {
+    [数据库]
+    [日志管理]
+}
+
+' --- 关键关系 ---
+[用户登录] --> [权限控制]
+[入库录入] --> [物料查询]
+[入库录入] --> [库存增加]
+[库存增加] --> [数据库]
+
+[出库录入] --> [物料查询]
+[出库录入] --> [库存校验]
+[库存校验] --> [库存扣减]
+[库存扣减] --> [数据库]
+
+[库存状态] --> [数据库]
+[库存状态] --> [预警提示]
+[指标统计] --> [数据库]
+[指标统计] --> [图表展示]
+
+[物料维护] --> [数据库]
+[供应商维护] --> [数据库]
+[仓位维护] --> [数据库]
+
+' --- 布局控制 ---
+P1 -[hidden]right- P2
+P2 -[hidden]right- P3
+
+P4 -[hidden]right- P5
+P5 -[hidden]right- P6
+
+P7 -[hidden]right- P8
+P8 -[hidden]right- P9
+
+P1 -[hidden]down- P4
+P2 -[hidden]down- P5
+P3 -[hidden]down- P6
+
+P4 -[hidden]down- P7
+P5 -[hidden]down- P8
+P6 -[hidden]down- P9
+
+@enduml
