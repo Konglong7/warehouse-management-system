@@ -36,6 +36,12 @@ public class MaterialService {
         if (material.getUnit() == null || material.getUnit().trim().isEmpty()) {
             throw new RuntimeException("单位不能为空");
         }
+        // 检查物料编码是否重复
+        QueryWrapper<Material> wrapper = new QueryWrapper<>();
+        wrapper.eq("material_code", material.getMaterialCode());
+        if (materialMapper.selectOne(wrapper) != null) {
+            throw new RuntimeException("物料编码已存在");
+        }
         // 初始化库存
         if (material.getCurrentStock() == null) {
             material.setCurrentStock(0);
@@ -67,8 +73,23 @@ public class MaterialService {
      */
     public List<Material> getWarningList() {
         QueryWrapper<Material> wrapper = new QueryWrapper<>();
-        // 库存小于等于预警值
         wrapper.apply("COALESCE(current_stock, 0) <= COALESCE(warning_stock, 0)");
         return materialMapper.selectList(wrapper);
+    }
+
+    /**
+     * 获取总库存量（数据库聚合查询）
+     * @return 总库存
+     */
+    public int getTotalStock() {
+        return materialMapper.getTotalStock();
+    }
+
+    /**
+     * 获取预警物料数量（数据库聚合查询）
+     * @return 预警数量
+     */
+    public int getWarningCount() {
+        return materialMapper.getWarningCount();
     }
 }

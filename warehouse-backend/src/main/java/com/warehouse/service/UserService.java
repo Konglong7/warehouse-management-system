@@ -13,8 +13,8 @@ public class UserService {
     @Autowired
     private UserMapper userMapper;
 
-    // BCrypt密码加密器
-    private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
     /**
      * 用户登录 - 使用BCrypt密码校验
@@ -26,7 +26,6 @@ public class UserService {
         QueryWrapper<User> wrapper = new QueryWrapper<>();
         wrapper.eq("username", username);
         User user = userMapper.selectOne(wrapper);
-        // 使用BCrypt校验密码
         if (user != null && passwordEncoder.matches(password, user.getPassword())) {
             return user;
         }
@@ -34,12 +33,17 @@ public class UserService {
     }
 
     /**
-     * 用户注册 - 密码加密存储
+     * 用户注册 - 密码加密存储，检查用户名重复
      * @param user 用户信息
      * @return 注册后的用户
      */
     public User register(User user) {
-        // 密码加密存储
+        // 检查用户名是否已存在
+        QueryWrapper<User> wrapper = new QueryWrapper<>();
+        wrapper.eq("username", user.getUsername());
+        if (userMapper.selectOne(wrapper) != null) {
+            throw new RuntimeException("用户名已存在");
+        }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userMapper.insert(user);
         return user;
@@ -54,14 +58,34 @@ public class UserService {
     }
 
     /**
+     * 根据用户名查询用户
+     * @param username 用户名
+     * @return 用户对象
+     */
+    public User getByUsername(String username) {
+        QueryWrapper<User> wrapper = new QueryWrapper<>();
+        wrapper.eq("username", username);
+        return userMapper.selectOne(wrapper);
+    }
+
+    /**
+     * 校验用户密码是否正确
+     * @param userId 用户ID
+     * @param rawPassword 明文密码
+     * @return 是否匹配
+     */
+    public boolean checkPassword(Long userId, String rawPassword) {
+        User user = userMapper.selectById(userId);
+        return user != null && passwordEncoder.matches(rawPassword, user.getPassword());
+    }
+
+    /**
      * 更新用户信息
      * @param user 用户信息
      * @return 是否成功
      */
     public boolean update(User user) {
-        // 如果包含密码字段，需要加密
         if (user.getPassword() != null && !user.getPassword().isEmpty()) {
-            // 检查是否已经是加密密码（BCrypt加密后以$2a$开头）
             if (!user.getPassword().startsWith("$2a$")) {
                 user.setPassword(passwordEncoder.encode(user.getPassword()));
             }

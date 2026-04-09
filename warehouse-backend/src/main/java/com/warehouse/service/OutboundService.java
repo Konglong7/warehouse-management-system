@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Service
 public class OutboundService {
@@ -42,7 +43,7 @@ public class OutboundService {
 
     /**
      * 出库操作 - 事务性保存
-     * 自动生成出库单号并更新库存（带库存校验）
+     * 使用原子操作校验并扣减库存，防止并发超卖和竞态条件
      * @param outbound 出库信息
      * @return 是否成功
      */
@@ -57,25 +58,24 @@ public class OutboundService {
             throw new RuntimeException("出库数量必须大于0");
         }
 
-        // 生成出库单号
-        outbound.setOutboundNo("OUT" + System.currentTimeMillis());
-        outbound.setOutboundTime(LocalDateTime.now());
-
-        // 检查库存是否充足（使用悲观锁）
+        // 验证物料是否存在
         Material material = materialMapper.selectById(outbound.getMaterialId());
         if (material == null) {
             throw new RuntimeException("物料不存在");
         }
-        if (material.getCurrentStock() < outbound.getQuantity()) {
+
+        // 生成出库单号（时间戳+随机数，防止高并发重复）
+        outbound.setOutboundNo("OUT" + System.currentTimeMillis() + String.format("%04d", ThreadLocalRandom.current().nextInt(10000)));
+        outbound.setOutboundTime(LocalDateTime.now());
+
+        // 原子扣减库存（SQL层面校验库存充足性，返回0表示库存不足）
+        int affectedRows = materialMapper.decreaseStockAtomic(outbound.getMaterialId(), outbound.getQuantity());
+        if (affectedRows == 0) {
             throw new RuntimeException("库存不足，当前库存：" + material.getCurrentStock());
         }
 
         // 保存出库记录
         int result = outboundMapper.insert(outbound);
-
-        // 更新物料库存
-        material.setCurrentStock(material.getCurrentStock() - outbound.getQuantity());
-        materialMapper.updateById(material);
 
         return result > 0;
     }

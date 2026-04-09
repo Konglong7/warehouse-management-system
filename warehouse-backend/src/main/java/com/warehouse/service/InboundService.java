@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Service
 public class InboundService {
@@ -42,7 +43,7 @@ public class InboundService {
 
     /**
      * 入库操作 - 事务性保存
-     * 自动生成入库单号并更新库存
+     * 自动生成入库单号并使用原子操作更新库存，防止并发竞态条件
      * @param inbound 入库信息
      * @return 是否成功
      */
@@ -57,21 +58,21 @@ public class InboundService {
             throw new RuntimeException("入库数量必须大于0");
         }
 
-        // 生成入库单号
-        inbound.setInboundNo("IN" + System.currentTimeMillis());
+        // 验证物料是否存在
+        Material material = materialMapper.selectById(inbound.getMaterialId());
+        if (material == null) {
+            throw new RuntimeException("物料不存在");
+        }
+
+        // 生成入库单号（时间戳+随机数，防止高并发重复）
+        inbound.setInboundNo("IN" + System.currentTimeMillis() + String.format("%04d", ThreadLocalRandom.current().nextInt(10000)));
         inbound.setInboundTime(LocalDateTime.now());
 
         // 保存入库记录
         int result = inboundMapper.insert(inbound);
 
-        // 更新物料库存（使用乐观锁机制）
-        Material material = materialMapper.selectById(inbound.getMaterialId());
-        if (material != null) {
-            // 获取当前库存，防止并发问题
-            int newStock = material.getCurrentStock() + inbound.getQuantity();
-            material.setCurrentStock(newStock);
-            materialMapper.updateById(material);
-        }
+        // 原子更新库存（防止并发竞态条件）
+        materialMapper.updateStockAtomic(inbound.getMaterialId(), inbound.getQuantity());
 
         return result > 0;
     }

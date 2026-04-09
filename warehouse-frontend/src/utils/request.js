@@ -27,14 +27,16 @@ request.interceptors.response.use(
     if (res.code === 200) {
       return res.data
     } else {
-      window.$message?.error(res.message || '请求失败')
+      // 优先使用后端返回的具体错误信息
+      const errorMsg = res.message || '请求失败'
+      window.$message?.error(errorMsg)
       // 401未授权，跳转登录
-      if (res.code === 401) {
+      if (res.code === 401 || res.code === 403) {
         localStorage.removeItem('token')
         localStorage.removeItem('user')
         window.location.href = '/login'
       }
-      return Promise.reject(new Error(res.message || '请求失败'))
+      return Promise.reject(new Error(errorMsg))
     }
   },
   error => {

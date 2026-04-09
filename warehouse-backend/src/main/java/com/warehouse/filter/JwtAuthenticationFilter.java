@@ -57,22 +57,15 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     /**
      * 从请求头提取Token
+     * 仅支持 Authorization: Bearer <token> 方式，防止Token通过URL参数泄露
      * @param request HttpServletRequest
      * @return Token字符串
      */
     private String extractToken(HttpServletRequest request) {
-        // 首先尝试从Authorization头获取
         String bearerToken = request.getHeader("Authorization");
         if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
             return bearerToken.substring(7);
         }
-
-        // 尝试从请求参数获取（兼容前端存储方式）
-        String token = request.getParameter("token");
-        if (token != null) {
-            return token;
-        }
-
         return null;
     }
 }

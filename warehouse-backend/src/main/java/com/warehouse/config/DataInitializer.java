@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * 数据初始化器
- * 应用启动时执行，确保现有数据的密码被正确加密
+ * 应用启动时执行，确保所有用户密码被正确BCrypt加密
  */
 @Component
 public class DataInitializer implements CommandLineRunner {
@@ -18,35 +18,44 @@ public class DataInitializer implements CommandLineRunner {
     @Autowired
     private UserMapper userMapper;
 
-    private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
     @Override
     public void run(String... args) {
-        // 确保管理员账户存在且密码已加密
-        initializeAdminUser();
+        initializeUsers();
     }
 
     /**
-     * 初始化管理员账户
-     * 将明文密码转换为BCrypt加密格式
+     * 初始化所有用户账户
+     * 将无效的密码哈希（非标准BCrypt格式）重新加密
      */
-    private void initializeAdminUser() {
-        // 查询admin用户
+    private void initializeUsers() {
+        // 查询所有用户
         QueryWrapper<User> wrapper = new QueryWrapper<>();
-        wrapper.eq("username", "admin");
-        User admin = userMapper.selectOne(wrapper);
+        // 仅查询密码字段不以$2a$或$2b$或$2y$开头的用户（非BCrypt格式）
+        wrapper.notLike("password", "$2a$")
+               .or()
+               .notLike("password", "$2b$")
+               .or()
+               .notLike("password", "$2y$");
 
-        if (admin != null) {
-            // 检查密码是否已加密（BCrypt格式）
-            if (!admin.getPassword().startsWith("$2")) {
-                // 密码未加密，执行加密
-                admin.setPassword(passwordEncoder.encode("123456"));
-                userMapper.updateById(admin);
-                System.out.println("[DataInitializer] 管理员密码已加密更新");
+        // 更简单的方式：遍历所有用户检查密码
+        for (User user : userMapper.selectList(null)) {
+            String pwd = user.getPassword();
+            // BCrypt哈希必须以$2开头且长度为60
+            if (pwd == null || !pwd.startsWith("$2") || pwd.length() != 60) {
+                user.setPassword(passwordEncoder.encode("123456"));
+                userMapper.updateById(user);
+                System.out.println("[DataInitializer] 用户 " + user.getUsername() + " 密码已加密更新");
             }
-        } else {
-            // 创建默认管理员
-            admin = new User();
+        }
+
+        // 确保admin账户存在
+        QueryWrapper<User> adminWrapper = new QueryWrapper<>();
+        adminWrapper.eq("username", "admin");
+        if (userMapper.selectOne(adminWrapper) == null) {
+            User admin = new User();
             admin.setUsername("admin");
             admin.setPassword(passwordEncoder.encode("123456"));
             admin.setNickname("管理员");

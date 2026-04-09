@@ -84,7 +84,7 @@ CREATE TABLE wms_inbound (
     inbound_time DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '入库时间',
     remark VARCHAR(200) COMMENT '备注',
     create_time DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-    FOREIGN KEY (material_id) REFERENCES wms_material(id) ON DELETE CASCADE,
+    FOREIGN KEY (material_id) REFERENCES wms_material(id) ON DELETE RESTRICT,
     FOREIGN KEY (location_id) REFERENCES wms_location(id) ON DELETE SET NULL
 ) COMMENT '入库记录表';
 
@@ -100,7 +100,7 @@ CREATE TABLE wms_outbound (
     outbound_time DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '出库时间',
     remark VARCHAR(200) COMMENT '备注',
     create_time DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-    FOREIGN KEY (material_id) REFERENCES wms_material(id) ON DELETE CASCADE,
+    FOREIGN KEY (material_id) REFERENCES wms_material(id) ON DELETE RESTRICT,
     FOREIGN KEY (location_id) REFERENCES wms_location(id) ON DELETE SET NULL
 ) COMMENT '出库记录表';
 

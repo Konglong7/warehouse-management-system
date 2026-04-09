@@ -27,7 +27,7 @@
 </template>
 
 <script setup>
-import { ref, computed, h } from 'vue'
+import { ref, computed, h, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { NLayout, NLayoutSider, NLayoutHeader, NLayoutContent, NMenu, NButton, NDropdown, NIcon } from 'naive-ui'
 import { useUserStore } from '../store/user'
@@ -45,7 +45,7 @@ const router = useRouter()
 const route = useRoute()
 const userStore = useUserStore()
 
-const userInfo = ref(JSON.parse(localStorage.getItem('user') || '{}'))
+const userInfo = computed(() => userStore.user || JSON.parse(localStorage.getItem('user') || '{}'))
 
 const activeKey = computed(() => route.path)
 

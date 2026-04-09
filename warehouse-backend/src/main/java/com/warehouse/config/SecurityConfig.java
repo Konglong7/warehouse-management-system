@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -25,6 +26,14 @@ public class SecurityConfig {
     private JwtUtils jwtUtils;
 
     /**
+     * BCrypt密码加密器（全局Spring Bean）
+     */
+    @Bean
+    public BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    /**
      * 配置安全过滤器链
      * @param http HttpSecurity对象
      * @return SecurityFilterChain
@@ -32,6 +41,9 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
+            // 启用CORS（使用Spring MVC的CORS配置）
+            .cors()
+            .and()
             // 禁用CSRF（使用JWT不需要）
             .csrf().disable()
             // 禁用Session（使用JWT无状态认证）

@@ -61,7 +61,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 import { NGrid, NGi, NCard, NTag } from 'naive-ui'
 import * as echarts from 'echarts'
 import { getDashboardStats, getInventoryStats } from '../api/stats'
@@ -76,6 +76,10 @@ const stats = ref({
 const stockChartRef = ref(null)
 const categoryChartRef = ref(null)
 
+/** ECharts实例引用，用于销毁和resize */
+let stockChart = null
+let categoryChart = null
+
 const loadStats = async () => {
   const data = await getDashboardStats()
   stats.value = data
@@ -85,7 +89,7 @@ const loadCharts = async () => {
   const materials = await getInventoryStats()
 
   // 库存统计柱状图
-  const stockChart = echarts.init(stockChartRef.value)
+  stockChart = echarts.init(stockChartRef.value)
   stockChart.setOption({
     tooltip: {
       trigger: 'axis',
@@ -139,7 +143,7 @@ const loadCharts = async () => {
     categoryMap[m.category] = (categoryMap[m.category] || 0) + m.currentStock
   })
 
-  const categoryChart = echarts.init(categoryChartRef.value)
+  categoryChart = echarts.init(categoryChartRef.value)
   categoryChart.setOption({
     tooltip: {
       trigger: 'item',
@@ -177,16 +181,27 @@ const loadCharts = async () => {
     }],
     color: ['#FFD100', '#FFA500', '#667eea', '#764ba2', '#f093fb', '#4facfe']
   })
+}
 
-  window.addEventListener('resize', () => {
-    stockChart.resize()
-    categoryChart.resize()
-  })
+/** 窗口resize时自适应图表 */
+const handleResize = () => {
+  stockChart?.resize()
+  categoryChart?.resize()
 }
 
 onMounted(() => {
   loadStats()
   loadCharts()
+  window.addEventListener('resize', handleResize)
+})
+
+/** 组件销毁时清理ECharts实例和事件监听，防止内存泄漏 */
+onUnmounted(() => {
+  window.removeEventListener('resize', handleResize)
+  stockChart?.dispose()
+  categoryChart?.dispose()
+  stockChart = null
+  categoryChart = null
 })
 </script>
 

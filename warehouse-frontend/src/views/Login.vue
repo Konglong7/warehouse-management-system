@@ -107,8 +107,8 @@ const message = useMessage()
 const userStore = useUserStore()
 
 const formData = ref({
-  username: 'admin',
-  password: '123456'
+  username: '',
+  password: ''
 })
 
 const loading = ref(false)

@@ -56,12 +56,29 @@ const router = createRouter({
   routes
 })
 
-// 路由守卫
+/**
+ * 路由守卫 - 校验token存在性及基础有效性
+ */
 router.beforeEach((to, from, next) => {
   const token = localStorage.getItem('token')
-  if (to.path !== '/login' && !token) {
+  let tokenValid = false
+
+  if (token) {
+    try {
+      // 解析JWT payload检查是否过期
+      const payload = JSON.parse(atob(token.split('.')[1]))
+      tokenValid = payload.exp * 1000 > Date.now()
+    } catch {
+      tokenValid = false
+    }
+  }
+
+  if (to.path !== '/login' && !tokenValid) {
+    // token无效或过期，清除并跳转登录
+    localStorage.removeItem('token')
+    localStorage.removeItem('user')
     next('/login')
-  } else if (to.path === '/login' && token) {
+  } else if (to.path === '/login' && tokenValid) {
     next('/dashboard')
   } else {
     next()

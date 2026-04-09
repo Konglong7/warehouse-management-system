@@ -21,7 +21,7 @@ mybatis-plus:
       logic-delete-value: 1
       logic-not-delete-value: 0
 
-# JWT配置
+# JWT配置（密钥长度需>=64字节以满足HS512要求）
 jwt:
-  secret: warehouse-wms-secret-key-2024-secure-random-string
+  secret: warehouse-wms-secret-key-2024-secure-random-string-must-be-at-least-64-bytes-long-for-hs512-algorithm
   expiration: 604800000
