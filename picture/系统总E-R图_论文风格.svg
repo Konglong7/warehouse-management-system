@@ -1,0 +1,333 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2400" height="1700" viewBox="0 0 2400 1700">
+  <defs>
+    <style>
+      .entity {
+        fill: #ffffff;
+        stroke: #000000;
+        stroke-width: 3;
+      }
+      .attribute {
+        fill: #ffffff;
+        stroke: #000000;
+        stroke-width: 3;
+      }
+      .relation {
+        fill: #ffffff;
+        stroke: #000000;
+        stroke-width: 3;
+      }
+      .line {
+        stroke: #000000;
+        stroke-width: 3;
+        fill: none;
+      }
+      .title {
+        fill: #000000;
+        font-family: "Microsoft YaHei", "SimHei", sans-serif;
+        font-size: 34px;
+        font-weight: 700;
+        text-anchor: middle;
+      }
+      .entity-text {
+        fill: #000000;
+        font-family: "Microsoft YaHei", "SimHei", sans-serif;
+        font-size: 28px;
+        font-weight: 700;
+        text-anchor: middle;
+        dominant-baseline: middle;
+      }
+      .attribute-text {
+        fill: #000000;
+        font-family: "Microsoft YaHei", "SimHei", sans-serif;
+        font-size: 22px;
+        font-weight: 600;
+        text-anchor: middle;
+        dominant-baseline: middle;
+      }
+      .relation-text {
+        fill: #000000;
+        font-family: "Microsoft YaHei", "SimHei", sans-serif;
+        font-size: 24px;
+        font-weight: 700;
+        text-anchor: middle;
+        dominant-baseline: middle;
+      }
+      .note-text {
+        fill: #000000;
+        font-family: "Microsoft YaHei", "SimHei", sans-serif;
+        font-size: 20px;
+        font-weight: 400;
+        text-anchor: middle;
+      }
+      .card-text {
+        fill: #000000;
+        font-family: "Microsoft YaHei", "SimHei", sans-serif;
+        font-size: 20px;
+        font-weight: 700;
+        text-anchor: middle;
+        dominant-baseline: middle;
+      }
+    </style>
+  </defs>
+
+  <rect x="0" y="0" width="2400" height="1700" fill="#ffffff"/>
+  <text class="title" x="1200" y="70">智能仓库管理系统总 E-R 图</text>
+
+  <!-- 用户实体 -->
+  <rect class="entity" x="1640" y="150" width="300" height="120"/>
+  <text class="entity-text" x="1790" y="210">用户</text>
+
+  <ellipse class="attribute" cx="1790" cy="55" rx="145" ry="55"/>
+  <text class="attribute-text" x="1790" y="55">用户ID</text>
+  <line class="line" x1="1790" y1="110" x2="1790" y2="150"/>
+
+  <ellipse class="attribute" cx="1540" cy="115" rx="145" ry="55"/>
+  <text class="attribute-text" x="1540" y="115">用户名</text>
+  <line class="line" x1="1625" y1="140" x2="1640" y2="175"/>
+
+  <ellipse class="attribute" cx="2050" cy="115" rx="145" ry="55"/>
+  <text class="attribute-text" x="2050" y="115">密码</text>
+  <line class="line" x1="1955" y1="140" x2="1940" y2="175"/>
+
+  <ellipse class="attribute" cx="1490" cy="250" rx="145" ry="55"/>
+  <text class="attribute-text" x="1490" y="250">昵称</text>
+  <line class="line" x1="1635" y1="230" x2="1640" y2="225"/>
+
+  <ellipse class="attribute" cx="2090" cy="250" rx="145" ry="55"/>
+  <text class="attribute-text" x="2090" y="250">角色</text>
+  <line class="line" x1="1940" y1="225" x2="1945" y2="230"/>
+
+  <ellipse class="attribute" cx="1540" cy="375" rx="145" ry="55"/>
+  <text class="attribute-text" x="1540" y="375">手机号</text>
+  <line class="line" x1="1665" y1="270" x2="1605" y2="320"/>
+
+  <ellipse class="attribute" cx="1790" cy="425" rx="160" ry="55"/>
+  <text class="attribute-text" x="1790" y="425">创建时间</text>
+  <line class="line" x1="1790" y1="270" x2="1790" y2="370"/>
+
+  <ellipse class="attribute" cx="2055" cy="375" rx="160" ry="55"/>
+  <text class="attribute-text" x="2055" y="375">更新时间</text>
+  <line class="line" x1="1915" y1="270" x2="1980" y2="320"/>
+
+  <!-- 供应商实体 -->
+  <rect class="entity" x="120" y="610" width="320" height="120"/>
+  <text class="entity-text" x="280" y="670">供应商</text>
+
+  <ellipse class="attribute" cx="280" cy="500" rx="150" ry="55"/>
+  <text class="attribute-text" x="280" y="500">供应商ID</text>
+  <line class="line" x1="280" y1="555" x2="280" y2="610"/>
+
+  <ellipse class="attribute" cx="75" cy="585" rx="165" ry="55"/>
+  <text class="attribute-text" x="75" y="585">供应商编码</text>
+  <line class="line" x1="238" y1="620" x2="170" y2="610"/>
+
+  <ellipse class="attribute" cx="65" cy="750" rx="165" ry="55"/>
+  <text class="attribute-text" x="65" y="750">供应商名称</text>
+  <line class="line" x1="223" y1="715" x2="150" y2="735"/>
+
+  <ellipse class="attribute" cx="270" cy="860" rx="145" ry="55"/>
+  <text class="attribute-text" x="270" y="860">联系人</text>
+  <line class="line" x1="280" y1="730" x2="270" y2="805"/>
+
+  <ellipse class="attribute" cx="500" cy="810" rx="150" ry="55"/>
+  <text class="attribute-text" x="500" y="810">联系电话</text>
+  <line class="line" x1="410" y1="715" x2="445" y2="765"/>
+
+  <ellipse class="attribute" cx="565" cy="640" rx="145" ry="55"/>
+  <text class="attribute-text" x="565" y="640">地址</text>
+  <line class="line" x1="440" y1="670" x2="420" y2="665"/>
+
+  <ellipse class="attribute" cx="505" cy="495" rx="160" ry="55"/>
+  <text class="attribute-text" x="505" y="495">创建时间</text>
+  <line class="line" x1="400" y1="610" x2="455" y2="548"/>
+
+  <ellipse class="attribute" cx="700" cy="670" rx="160" ry="55"/>
+  <text class="attribute-text" x="700" y="670">更新时间</text>
+  <line class="line" x1="440" y1="670" x2="540" y2="670"/>
+
+  <!-- 物料实体 -->
+  <rect class="entity" x="1010" y="610" width="380" height="120"/>
+  <text class="entity-text" x="1200" y="670">物料</text>
+
+  <ellipse class="attribute" cx="1200" cy="500" rx="150" ry="55"/>
+  <text class="attribute-text" x="1200" y="500">物料ID</text>
+  <line class="line" x1="1200" y1="555" x2="1200" y2="610"/>
+
+  <ellipse class="attribute" cx="935" cy="530" rx="160" ry="55"/>
+  <text class="attribute-text" x="935" y="530">物料编码</text>
+  <line class="line" x1="1010" y1="620" x2="1035" y2="575"/>
+
+  <ellipse class="attribute" cx="785" cy="660" rx="165" ry="55"/>
+  <text class="attribute-text" x="785" y="660">物料名称</text>
+  <line class="line" x1="1010" y1="670" x2="950" y2="668"/>
+
+  <ellipse class="attribute" cx="910" cy="815" rx="145" ry="55"/>
+  <text class="attribute-text" x="910" y="815">物料分类</text>
+  <line class="line" x1="1085" y1="730" x2="980" y2="775"/>
+
+  <ellipse class="attribute" cx="1115" cy="910" rx="125" ry="55"/>
+  <text class="attribute-text" x="1115" y="910">单位</text>
+  <line class="line" x1="1170" y1="730" x2="1135" y2="855"/>
+
+  <ellipse class="attribute" cx="1290" cy="910" rx="165" ry="55"/>
+  <text class="attribute-text" x="1290" y="910">预警库存</text>
+  <line class="line" x1="1240" y1="730" x2="1270" y2="855"/>
+
+  <ellipse class="attribute" cx="1495" cy="815" rx="165" ry="55"/>
+  <text class="attribute-text" x="1495" y="815">当前库存</text>
+  <line class="line" x1="1315" y1="730" x2="1420" y2="775"/>
+
+  <ellipse class="attribute" cx="1615" cy="660" rx="140" ry="55"/>
+  <text class="attribute-text" x="1615" y="660">备注</text>
+  <line class="line" x1="1390" y1="670" x2="1475" y2="668"/>
+
+  <ellipse class="attribute" cx="1465" cy="520" rx="160" ry="55"/>
+  <text class="attribute-text" x="1465" y="520">创建时间</text>
+  <line class="line" x1="1365" y1="610" x2="1410" y2="570"/>
+
+  <ellipse class="attribute" cx="1260" cy="375" rx="160" ry="55"/>
+  <text class="attribute-text" x="1260" y="375">更新时间</text>
+  <line class="line" x1="1230" y1="610" x2="1250" y2="430"/>
+
+  <!-- 仓位实体 -->
+  <rect class="entity" x="1860" y="610" width="320" height="120"/>
+  <text class="entity-text" x="2020" y="670">仓位</text>
+
+  <ellipse class="attribute" cx="2020" cy="500" rx="150" ry="55"/>
+  <text class="attribute-text" x="2020" y="500">仓位ID</text>
+  <line class="line" x1="2020" y1="555" x2="2020" y2="610"/>
+
+  <ellipse class="attribute" cx="2255" cy="560" rx="165" ry="55"/>
+  <text class="attribute-text" x="2255" y="560">仓位编码</text>
+  <line class="line" x1="2180" y1="620" x2="2140" y2="595"/>
+
+  <ellipse class="attribute" cx="2335" cy="705" rx="165" ry="55"/>
+  <text class="attribute-text" x="2335" y="705">仓位名称</text>
+  <line class="line" x1="2180" y1="685" x2="2170" y2="686"/>
+
+  <ellipse class="attribute" cx="2240" cy="860" rx="160" ry="55"/>
+  <text class="attribute-text" x="2240" y="860">所属仓库</text>
+  <line class="line" x1="2150" y1="730" x2="2195" y2="810"/>
+
+  <ellipse class="attribute" cx="2020" cy="935" rx="135" ry="55"/>
+  <text class="attribute-text" x="2020" y="935">容量</text>
+  <line class="line" x1="2020" y1="730" x2="2020" y2="880"/>
+
+  <ellipse class="attribute" cx="1805" cy="860" rx="145" ry="55"/>
+  <text class="attribute-text" x="1805" y="860">状态</text>
+  <line class="line" x1="1890" y1="730" x2="1845" y2="810"/>
+
+  <ellipse class="attribute" cx="1700" cy="705" rx="140" ry="55"/>
+  <text class="attribute-text" x="1700" y="705">备注</text>
+  <line class="line" x1="1860" y1="685" x2="1840" y2="686"/>
+
+  <ellipse class="attribute" cx="1770" cy="550" rx="160" ry="55"/>
+  <text class="attribute-text" x="1770" y="550">创建时间</text>
+  <line class="line" x1="1885" y1="610" x2="1835" y2="590"/>
+
+  <ellipse class="attribute" cx="2005" cy="360" rx="160" ry="55"/>
+  <text class="attribute-text" x="2005" y="360">更新时间</text>
+  <line class="line" x1="2010" y1="610" x2="2008" y2="415"/>
+
+  <!-- 入库记录实体 -->
+  <rect class="entity" x="520" y="1210" width="340" height="120"/>
+  <text class="entity-text" x="690" y="1270">入库记录</text>
+
+  <ellipse class="attribute" cx="690" cy="1105" rx="150" ry="55"/>
+  <text class="attribute-text" x="690" y="1105">入库ID</text>
+  <line class="line" x1="690" y1="1160" x2="690" y2="1210"/>
+
+  <ellipse class="attribute" cx="420" cy="1150" rx="165" ry="55"/>
+  <text class="attribute-text" x="420" y="1150">入库单号</text>
+  <line class="line" x1="520" y1="1235" x2="515" y2="1200"/>
+
+  <ellipse class="attribute" cx="300" cy="1280" rx="135" ry="55"/>
+  <text class="attribute-text" x="300" y="1280">数量</text>
+  <line class="line" x1="520" y1="1270" x2="435" y2="1278"/>
+
+  <ellipse class="attribute" cx="430" cy="1425" rx="155" ry="55"/>
+  <text class="attribute-text" x="430" y="1425">操作人</text>
+  <line class="line" x1="560" y1="1330" x2="505" y2="1380"/>
+
+  <ellipse class="attribute" cx="690" cy="1495" rx="170" ry="55"/>
+  <text class="attribute-text" x="690" y="1495">入库时间</text>
+  <line class="line" x1="690" y1="1330" x2="690" y2="1440"/>
+
+  <ellipse class="attribute" cx="940" cy="1425" rx="145" ry="55"/>
+  <text class="attribute-text" x="940" y="1425">备注</text>
+  <line class="line" x1="820" y1="1330" x2="880" y2="1380"/>
+
+  <ellipse class="attribute" cx="1045" cy="1255" rx="160" ry="55"/>
+  <text class="attribute-text" x="1045" y="1255">创建时间</text>
+  <line class="line" x1="860" y1="1268" x2="885" y2="1263"/>
+
+  <!-- 出库记录实体 -->
+  <rect class="entity" x="1420" y="1210" width="340" height="120"/>
+  <text class="entity-text" x="1590" y="1270">出库记录</text>
+
+  <ellipse class="attribute" cx="1590" cy="1105" rx="150" ry="55"/>
+  <text class="attribute-text" x="1590" y="1105">出库ID</text>
+  <line class="line" x1="1590" y1="1160" x2="1590" y2="1210"/>
+
+  <ellipse class="attribute" cx="1325" cy="1150" rx="165" ry="55"/>
+  <text class="attribute-text" x="1325" y="1150">出库单号</text>
+  <line class="line" x1="1420" y1="1235" x2="1415" y2="1200"/>
+
+  <ellipse class="attribute" cx="1205" cy="1280" rx="135" ry="55"/>
+  <text class="attribute-text" x="1205" y="1280">数量</text>
+  <line class="line" x1="1420" y1="1270" x2="1340" y2="1278"/>
+
+  <ellipse class="attribute" cx="1330" cy="1425" rx="155" ry="55"/>
+  <text class="attribute-text" x="1330" y="1425">操作人</text>
+  <line class="line" x1="1460" y1="1330" x2="1405" y2="1380"/>
+
+  <ellipse class="attribute" cx="1590" cy="1495" rx="170" ry="55"/>
+  <text class="attribute-text" x="1590" y="1495">出库时间</text>
+  <line class="line" x1="1590" y1="1330" x2="1590" y2="1440"/>
+
+  <ellipse class="attribute" cx="1845" cy="1425" rx="145" ry="55"/>
+  <text class="attribute-text" x="1845" y="1425">备注</text>
+  <line class="line" x1="1720" y1="1330" x2="1780" y2="1380"/>
+
+  <ellipse class="attribute" cx="1955" cy="1255" rx="160" ry="55"/>
+  <text class="attribute-text" x="1955" y="1255">创建时间</text>
+  <line class="line" x1="1760" y1="1268" x2="1795" y2="1263"/>
+
+  <!-- 关系 -->
+  <polygon class="relation" points="650,670 760,585 870,670 760,755"/>
+  <text class="relation-text" x="760" y="670">供应</text>
+  <line class="line" x1="440" y1="670" x2="650" y2="670"/>
+  <line class="line" x1="870" y1="670" x2="1010" y2="670"/>
+  <text class="card-text" x="565" y="645">1</text>
+  <text class="card-text" x="940" y="645">N</text>
+
+  <polygon class="relation" points="870,1020 980,935 1090,1020 980,1105"/>
+  <text class="relation-text" x="980" y="1020">对应物料</text>
+  <line class="line" x1="1090" y1="1020" x2="1200" y2="730"/>
+  <line class="line" x1="860" y1="1260" x2="900" y2="1105"/>
+  <text class="card-text" x="1125" y="900">1</text>
+  <text class="card-text" x="900" y="1160">N</text>
+
+  <polygon class="relation" points="1330,1020 1440,935 1550,1020 1440,1105"/>
+  <text class="relation-text" x="1440" y="1020">对应物料</text>
+  <line class="line" x1="1330" y1="1020" x2="1225" y2="730"/>
+  <line class="line" x1="1540" y1="1105" x2="1510" y2="1210"/>
+  <text class="card-text" x="1275" y="900">1</text>
+  <text class="card-text" x="1528" y="1160">N</text>
+
+  <polygon class="relation" points="1010,1195 1120,1110 1230,1195 1120,1280"/>
+  <text class="relation-text" x="1120" y="1195">入库至</text>
+  <line class="line" x1="1230" y1="1195" x2="1940" y2="730"/>
+  <line class="line" x1="1010" y1="1195" x2="860" y2="1265"/>
+  <text class="card-text" x="1315" y="1075">1</text>
+  <text class="card-text" x="940" y="1225">N</text>
+
+  <polygon class="relation" points="1690,1195 1800,1110 1910,1195 1800,1280"/>
+  <text class="relation-text" x="1800" y="1195">出库自</text>
+  <line class="line" x1="1690" y1="1195" x2="1760" y2="1265"/>
+  <line class="line" x1="1910" y1="1195" x2="2020" y2="730"/>
+  <text class="card-text" x="1885" y="1075">1</text>
+  <text class="card-text" x="1710" y="1240">N</text>
+
+  <text class="note-text" x="1790" y="470">注：用户实体在当前数据库中未与业务表建立外键联系</text>
+</svg>

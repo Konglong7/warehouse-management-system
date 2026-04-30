@@ -1,0 +1,85 @@
+@startuml
+skinparam shadowing false
+skinparam backgroundColor white
+skinparam defaultFontName "Microsoft YaHei"
+skinparam defaultFontSize 20
+skinparam roundcorner 10
+skinparam ranksep 150
+skinparam nodesep 40
+skinparam linetype polyline
+
+skinparam usecase {
+    BackgroundColor white
+    BorderColor black
+    BorderThickness 1.5
+    FontSize 20
+}
+skinparam actor {
+    BackgroundColor white
+    BorderColor black
+    BorderThickness 1.5
+    FontSize 22
+}
+skinparam rectangle {
+    BackgroundColor white
+    BorderColor black
+    BorderThickness 1.5
+    FontSize 20
+}
+skinparam arrow {
+    Color black
+    Thickness 1
+}
+
+left to right direction
+
+actor "普通用户" as User
+actor "管理员" as Admin
+
+Admin --|> User
+
+rectangle "智能仓库管理系统" {
+    usecase "登录系统" as UC1
+    usecase "查看首页统计\n与图表" as UC2
+    usecase "查看物料列表\n与搜索物料" as UC3
+    usecase "进行入库操作" as UC4
+    usecase "进行出库操作" as UC5
+    usecase "查看入库记录" as UC6
+    usecase "查看出库记录" as UC7
+    usecase "查看库存信息" as UC8
+    usecase "修改个人信息" as UC9
+    usecase "修改登录密码" as UC10
+
+    usecase "新增物料信息" as UC11
+    usecase "修改物料信息" as UC12
+    usecase "删除物料信息" as UC13
+    usecase "管理供应商信息" as UC14
+    usecase "管理仓位信息" as UC15
+    usecase "新增用户账户" as UC16
+    usecase "修改用户信息" as UC17
+    usecase "删除用户账户" as UC18
+    usecase "查看用户信息" as UC19
+}
+
+User --> UC1
+User --> UC2
+User --> UC3
+User --> UC4
+User --> UC5
+User --> UC6
+User --> UC7
+User --> UC8
+User --> UC9
+User --> UC10
+
+Admin --> UC11
+Admin --> UC12
+Admin --> UC13
+Admin --> UC14
+Admin --> UC15
+Admin --> UC16
+Admin --> UC17
+Admin --> UC18
+Admin --> UC19
+
+@enduml
